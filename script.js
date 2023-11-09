@@ -2,19 +2,17 @@
 // https://api.pexels.com/v1/
 
 const loadImgBtn = document.getElementById("load-img");
+const secondLoadBtn = document.getElementById("second-load-img");
 
-loadImgBtn.onclick = async function () {
+const firstLoad = async function (url) {
   try {
-    const response = await fetch(
-      "https://api.pexels.com/v1/search/?query=nature",
-      {
-        method: "GET",
-        headers: {
-          authorization:
-            "DQTO53JoTvRTIM8xiaJdlDMI7r8y4RJEmwXskzuvVNiOBalNMhjLQReB",
-        },
-      }
-    );
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        authorization:
+          "DQTO53JoTvRTIM8xiaJdlDMI7r8y4RJEmwXskzuvVNiOBalNMhjLQReB",
+      },
+    });
     if (!response.ok) {
       throw new Error("General Fetching Error");
     }
@@ -51,19 +49,48 @@ loadImgBtn.onclick = async function () {
           </button>
           <button
             type="button"
-            class="btn btn-sm btn-outline-secondary"
+            class="btn btn-sm btn-outline-secondary hide-btn"
+           
           >
       Hide
           </button>
         </div>
-        <small class="text-muted">9 mins</small>
+        <small class="text-muted">${img.id}</small>
       </div>
     </div>
   </div>`;
 
       myRow.appendChild(col);
+
+      const hideBtn = col.querySelector(".hide-btn");
+      hideBtn.addEventListener("click", function () {
+        col.remove();
+      });
     });
   } catch (error) {
     console.log("erroreeeeeee", error);
   }
 };
+
+let urlApi;
+
+loadImgBtn.addEventListener("click", function () {
+  urlApi = "https://api.pexels.com/v1/search/?query=nature";
+  firstLoad(urlApi);
+});
+// secondLoadBtn.onclick = firstLoad,{  const response = await fetch(
+//     "https://api.pexels.com/v1/search/?query=cat",
+//     {
+//       method: "GET",
+//       headers: {
+//         authorization:
+//           "DQTO53JoTvRTIM8xiaJdlDMI7r8y4RJEmwXskzuvVNiOBalNMhjLQReB",
+//       },
+//     }
+//   );
+
+// }
+secondLoadBtn.addEventListener("click", function () {
+  urlApi = "https://api.pexels.com/v1/search/?query=cat";
+  firstLoad(urlApi);
+});
